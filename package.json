@@ -1,0 +1,35 @@
+{
+  "dependencies": {
+    "bootstrap": "^5.1.3",
+    "express": "^4.18.1",
+    "jquery": "^3.6.0"
+  },
+  "name": "crud-app",
+  "version": "0.1.2",
+  "description": "crud example",
+  "main": "index.html",
+  "devDependencies": {
+    "nodemon": "^2.0.16"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CaseyG5/crud-app.git"
+  },
+  "keywords": [
+    "create",
+    "read",
+    "update",
+    "delete"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CaseyG5/crud-app/issues"
+  },
+  "homepage": "https://github.com/CaseyG5/crud-app#readme"
+}
