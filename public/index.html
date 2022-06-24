@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Construct a Deck</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="container">
+    <div class="col-6">
+        <div id="new-deck" class="frame">
+            <div style="display: flex; justify-content: space-between">
+                <h2>New Deck</h2>   <button id="refresh-btn" class="btn btn-light border">&#10227;</button>
+            </div>    
+            <label for="new-deck-name">Deck name:</label>
+            <input id="new-deck-name" type="text" class="form-control"> <br>
+            <button id="create-deck-btn" class="btn btn-success form-control">Create</button>
+        </div>
+
+        <div id="my-decks">
+
+        </div>
+    </div>
+
+    <div id="editor" class="col-6">
+        <div class="frame">
+            <h2>Deck Editor</h2>
+            <div style="display: flex">
+                <div style="width: 15%; margin-right: 5%">
+                    <label for="deck-name">ID#:</label>
+                    <input type="number" id="deck-id" class="form-control" readonly>
+                </div>
+                <div style="width: 75%">
+                    <label for="deck-name">Deck name:</label>
+                    <input type="text" id="deck-name" class="form-control">
+                </div>
+            </div>    
+            <br>
+            <fieldset class="form-group">
+                <input type="checkbox" name="color" value="white" id="check-white" class="checkbox"> <label for="check-white">White</label>
+                <input type="checkbox" name="color" value="blue" id="check-blue" class="alert alert-primary"> <label for="check-blue">Blue</label>
+                <input type="checkbox" name="color" value="black" id="check-black" class="checkbox"> <label for="check-black">Black</label><br>
+                <input type="checkbox" name="color" value="red" id="check-red" class="checkbox"> <label for="check-red">Red</label>
+                <input type="checkbox" name="color" value="green" id="check-green" class="checkbox"> <label for="check-green">Green</label>
+                <input type="checkbox" name="color" value="colorless" id="check-colorless" class="checkbox"> <label for="check-colorless">Colorless</label>
+            </fieldset>
+            <br>
+            <div style="display: flex; justify-content: space-around;">
+                <div id="card-frame">
+                    <img id="card-scan" src="">
+                </div>
+                <div class="col-2" style="display: flex; flex-direction: column; justify-content: space-between;">
+                    <div class="btn-panel btn-col">
+                        <button class="btn btn-success" onclick="document.getElementById('card-count').value++">+1</button>
+                        <button id="add-four" class="btn btn-success">+4</button>
+                        <button class="btn btn-danger" onclick="document.getElementById('card-count').value--">-1</button>
+                        <button class="btn btn-danger" onclick="document.getElementById('card-count').value=0">-all</button>
+                    </div>
+                    <div>
+                        <label for="deck-name">Total:</label>
+                        <input type="number" id="card-count" class="form-control" readonly>
+                    </div>
+                </div>
+            </div>    
+            <br>
+            <div>
+                <label for="search-field">Card name:</label>
+                <div id="search-bar">
+                    <input type="text" id="search-field" class="form-control">
+                    <button id="search-btn" class="btn btn-info">&#128269;</button>
+                </div>
+            </div>
+
+            <!-- <ul id="decklist">
+            </ul> -->
+            <br>
+            <div>
+                <button id="cancel-btn" class="btn btn-secondary">Cancel</button>
+                <button id="save-btn" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="./node_modules/jquery/dist/jquery.js"></script>
+    <script src="app.js"></script>
+    <!-- add bootstrap.bundle.js  if necessary -->
+</body>
+</html>
