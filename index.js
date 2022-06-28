@@ -1,3 +1,5 @@
+import Deck from './deck';
+
 const PORT = 5000;
 
 const {cards} = require('./cards.js');
@@ -11,8 +13,9 @@ const app = express();
 const http = require('http');
 const server = http.createServer(app);
 
+let decks = [];
 let deckID = 1;
-const decks = [ {id: deckID++, name: "Yin & Yang", numCards: 40, colors: ["black", "white"]} ];
+decks.push(new Deck("Yin & Yang", deckID++, ["black", "white"]));   // start with 1 entry
 
 
 app.use( express.static('./public') );      // Access to public folder containing HTML, CSS, JS
@@ -29,7 +32,7 @@ app.get('/api/cards/:name', (req, resp) => {
     if(!singleCard) {
         return resp.json( {success: false, msg: "No matches found"} );
     }
-    resp.status(200).json( {success: true, cardID: `${singleCard.id}`} );
+    resp.status(200).json( {success: true, cardName: `${singleCard.name}`, cardID: `${singleCard.id}`} );
 });
 
 // Get all decks
@@ -50,20 +53,20 @@ app.get('/api/decks/:id', (req, resp) => {
 // POST/ADD a deck
 app.post('/api/decks', (req, resp) => {
     console.log(req.body);
-    const {name, numCards, colors} = req.body;   // pull or "destructure" properties from req.body
-    if(!name || !numCards || !colors) return resp.status(400).json( {success: false, msg: "Please supply values for all data fields"} );
-    let deckToAdd = {id: deckID++, name: name, numCards: numCards, colors: colors};
+    const {name, colors} = req.body;   // pull or "destructure" properties from req.body
+    if(!name) return resp.status(400).json( {success: false, msg: "Please supply a name for the deck"} );
+    const deckToAdd = new Deck(name, deckID++);
     decks.push( deckToAdd );
     resp.status(201).json( deckToAdd );                 // Status code for "created"
 });
 
 // PUT/UPDATE a deck
 app.put('/api/decks/:id', (req, resp) => {
-    const {name, numCards, colors } = req.body;
-    let deckToUpdate = decks.find( (deck) => deck.id == req.params.id);
+    const {name, cards, colors } = req.body;
+    const deckToUpdate = decks.find( (deck) => deck.id == req.params.id);
     if(!deckToUpdate) return resp.status(404).json( {success: false, msg: "No decks found matching that ID."} );
     if(name) deckToUpdate.name = name;
-    if(numCards) deckToUpdate.numCards = numCards;
+    if(cards) deckToUpdate.cards = cards;
     if(colors) deckToUpdate.colors = colors;
     resp.status(200).json( deckToUpdate );             
 });
