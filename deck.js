@@ -11,6 +11,12 @@ export default class Deck {
             this.cards.push(new Card(name, id));
         }
     }
+    removeCard(id) {
+        let index = this.cards.findLastIndex( card => (card.id === id));
+        if(index == -1) return false; 
+        this.cards.splice( index, 1 );
+        return true;
+    }
 }
 
 class Card {
