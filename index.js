@@ -1,4 +1,17 @@
-import Deck from './deck';
+class Deck {                                                // import Deck from './deck';
+    constructor(name, id, colors = ["colorless"]) {
+        this.name = name;
+        this.id = id;
+        this.cards = [];
+        this.colors = colors;    
+    }
+
+    addCard(name, id, qty = 1) {
+        for(let i = 0; i < qty; i++) {
+            this.cards.push(new Card(name, id));
+        }
+    }
+}
 
 const PORT = 5000;
 
@@ -47,17 +60,17 @@ app.get('/api/decks/:id', (req, resp) => {
     if(!singleDeck) {
         return resp.end("No decks found with that particular ID.");
     }
-    resp.status(200).json(singleDeck);
+    resp.status(200).json( {success: true, deck: singleDeck} );
 });
 
 // POST/ADD a deck
 app.post('/api/decks', (req, resp) => {
     console.log(req.body);
-    const {name, colors} = req.body;   // pull or "destructure" properties from req.body
+    const { name } = req.body;   // pull or "destructure" properties from req.body
     if(!name) return resp.status(400).json( {success: false, msg: "Please supply a name for the deck"} );
     const deckToAdd = new Deck(name, deckID++);
     decks.push( deckToAdd );
-    resp.status(201).json( deckToAdd );                 // Status code for "created"
+    resp.status(201).json( {success: true, deck: deckToAdd} );                 // Status code for "created"
 });
 
 // PUT/UPDATE a deck
@@ -68,7 +81,7 @@ app.put('/api/decks/:id', (req, resp) => {
     if(name) deckToUpdate.name = name;
     if(cards) deckToUpdate.cards = cards;
     if(colors) deckToUpdate.colors = colors;
-    resp.status(200).json( deckToUpdate );             
+    resp.status(200).json( {success: true, deck: deckToUpdate} );             
 });
 
 // DELETE a deck
@@ -77,7 +90,7 @@ app.delete('/api/decks/:id', (req, resp) => {
     if(!deckToDelete) return resp.status(404).json( {success: false, msg: "No decks found matching that ID."} );
     let index = decks.indexOf(deckToDelete, 0);             // can we avoid searching twice?
     decks.splice(index, 1);
-    resp.status(200).json( {msg: "Delete successful"} ); 
+    resp.status(200).json( {success: true, msg: "Delete successful"} ); 
 });
 
 app.all('*', (req, resp) => {                           // All others not found
